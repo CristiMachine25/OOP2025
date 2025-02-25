@@ -1,8 +1,8 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-int convertStringToInt(const char* str) {
+int convertStringToInt(char* str) {
     if (str == NULL)
         return 0;
 
@@ -10,9 +10,8 @@ int convertStringToInt(const char* str) {
     int sign = 1;
     int i = 0;
 
-    // Convert each digit
     while (str[i] != '\0') {
-        if (isdigit((unsigned char)str[i])) {
+        if (isdigit((char)str[i])) {
             if (result > (INT_MAX - (str[i] - '0')) / 10) {
                 return sign > 0 ? INT_MAX : INT_MIN;
             }
@@ -34,16 +33,13 @@ int main() {
     errno_t err;
     err = fopen_s(&file, "in.txt", "r");
     if (err != 0 || file == NULL) {
-        printf("Error opening file! Code: %d\n", err);
+        printf("Nu se deschide fisierul! Code: %d\n", err);
         return 1;
     }
-
-    // Read each line from file
     memset(buffer, 0, sizeof(buffer));
 
-    // Use regular fgets instead of fgets_s
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        // Process line
+        
         size_t length = strlen(buffer);
         int number = convertStringToInt(buffer);
         sum += number;
